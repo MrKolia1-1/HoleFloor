@@ -1,9 +1,9 @@
-package me.talltales.holefloor.arena;
+package me.talltales.holefloor.arena.holefloor.arena;
 
-import me.talltales.holefloor.arena.runnables.lifetime.HoleFloorArenaLifetimeRespawn;
-import me.talltales.holefloor.arena.runnables.lifetime.HoleFloorArenaLifetimeRunnable;
-import me.talltales.holefloor.arena.runnables.timer.HoleFloorArenaTimerRunnable;
-import me.talltales.holefloor.plugin.HoleFloor;
+import me.talltales.holefloor.arena.holefloor.arena.runnables.lifetime.HoleFloorArenaLifetimeRespawn;
+import me.talltales.holefloor.arena.holefloor.arena.runnables.lifetime.HoleFloorArenaLifetimeRunnable;
+import me.talltales.holefloor.arena.holefloor.arena.runnables.timer.HoleFloorArenaTimerRunnable;
+import me.talltales.holefloor.arena.holefloor.plugin.HoleFloor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;

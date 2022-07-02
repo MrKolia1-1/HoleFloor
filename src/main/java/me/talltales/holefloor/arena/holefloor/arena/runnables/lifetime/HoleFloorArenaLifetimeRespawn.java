@@ -1,10 +1,8 @@
-package me.talltales.holefloor.arena.runnables.lifetime;
+package me.talltales.holefloor.arena.holefloor.arena.runnables.lifetime;
 
-import me.talltales.holefloor.arena.HoleFloorArena;
-import me.talltales.holefloor.plugin.HoleFloor;
+import me.talltales.holefloor.arena.holefloor.arena.HoleFloorArena;
+import me.talltales.holefloor.arena.holefloor.plugin.HoleFloor;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -12,7 +10,6 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 

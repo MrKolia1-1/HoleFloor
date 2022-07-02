@@ -1,2 +1,7 @@
 arena.timer.wait: "Not enough players to start the game {0}/{1} waiting"
 arena.timer.start: "Get ready the game will start in {0} seconds"
+arena.timer.respawn: "You respawning in {0} seconds."
+arena.message.game-started: "▌\n▌§6§lThe game is starting!\n§r▌"
+arena.message.game-ended: "▌\n▌§b§lThe game is ending!\n§r▌"
+arena.message.respawn: "▌\n▌§a§lYou respawned!\n§r▌"
+arena.message.death: "▌\n▌§c§lYou death!\n§r▌"

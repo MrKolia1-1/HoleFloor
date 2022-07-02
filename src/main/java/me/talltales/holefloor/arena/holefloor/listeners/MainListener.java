@@ -1,9 +1,7 @@
-package me.talltales.holefloor.listeners;
+package me.talltales.holefloor.arena.holefloor.listeners;
 
-import me.talltales.holefloor.arena.HoleFloorArena;
-import me.talltales.holefloor.arena.HoleFloorManager;
-import me.talltales.holefloor.plugin.HoleFloor;
-import org.bukkit.Bukkit;
+import me.talltales.holefloor.arena.holefloor.arena.HoleFloorArena;
+import me.talltales.holefloor.arena.holefloor.plugin.HoleFloor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

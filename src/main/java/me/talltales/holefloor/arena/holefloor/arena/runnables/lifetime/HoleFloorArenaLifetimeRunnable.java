@@ -1,7 +1,7 @@
-package me.talltales.holefloor.arena.runnables.lifetime;
+package me.talltales.holefloor.arena.holefloor.arena.runnables.lifetime;
 
-import me.talltales.holefloor.arena.HoleFloorArena;
-import me.talltales.holefloor.plugin.HoleFloor;
+import me.talltales.holefloor.arena.holefloor.arena.HoleFloorArena;
+import me.talltales.holefloor.arena.holefloor.plugin.HoleFloor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
