@@ -1,6 +1,8 @@
 package me.talltales.holefloor.arena;
 
 import com.github.shynixn.structureblocklib.api.bukkit.StructureBlockLibApi;
+import me.talltales.holefloor.arena.runnables.lifetime.HoleFloorArenaLifetimeRespawn;
+import me.talltales.holefloor.arena.runnables.lifetime.HoleFloorArenaLifetimeRunnable;
 import me.talltales.holefloor.arena.runnables.timer.HoleFloorArenaTimerRunnable;
 import me.talltales.holefloor.plugin.HoleFloor;
 import org.bukkit.Bukkit;
@@ -34,6 +36,9 @@ public final class HoleFloorManager {
         arena.world.setSpawnLocation(14, 112, 21);
 
         arena.timerRunnable = new HoleFloorArenaTimerRunnable(arena);
+        arena.lifetimeRunnable = new HoleFloorArenaLifetimeRunnable(arena);
+        arena.lifetimeRespawn = new HoleFloorArenaLifetimeRespawn(arena);
+
         arena.timerRunnable.run();
         this.loadStructure(arena, arena.type);
         this.arenas.add(arena);

@@ -32,6 +32,8 @@ public final class HoleFloorArenaTimerStart {
             AtomicReference<String> title = new AtomicReference<>(HoleFloor.getInstance().getLocale().getString("arena.timer.start"));
             if (i.get() == -1) {
                 i.set(15);
+                this.arena.startGame();
+                this.cancel();
             } else {
                 title.set(title.get().replace("{0}", String.valueOf(i.get())));
                 this.bossBar.setTitle(title.get());

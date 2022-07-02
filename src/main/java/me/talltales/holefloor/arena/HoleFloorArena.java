@@ -1,10 +1,14 @@
 package me.talltales.holefloor.arena;
 
+import me.talltales.holefloor.arena.runnables.lifetime.HoleFloorArenaLifetimeRespawn;
+import me.talltales.holefloor.arena.runnables.lifetime.HoleFloorArenaLifetimeRunnable;
 import me.talltales.holefloor.arena.runnables.timer.HoleFloorArenaTimerRunnable;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public final class HoleFloorArena {
@@ -14,9 +18,21 @@ public final class HoleFloorArena {
     public HoleFloorArenaType type;
     public HoleFloorArenaState state;
     public HoleFloorArenaTimerRunnable timerRunnable;
+    public HoleFloorArenaLifetimeRunnable lifetimeRunnable;
+    public HoleFloorArenaLifetimeRespawn lifetimeRespawn;
 
     public HoleFloorArena() {
         super();
     }
 
+    public void startGame() {
+        this.state = HoleFloorArenaState.PLAYING;
+        this.lifetimeRunnable.run();
+        this.lifetimeRespawn.run();
+        this.players.forEach(player -> {
+            Location location = this.type.getLocations().get(new Random().nextInt(type.getLocations().size()));
+            location.setWorld(this.world);
+            player.teleport(location);
+        });
+    }
 }
