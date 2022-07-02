@@ -1,0 +1,2 @@
+arena.timer.wait: "Not enough players to start the game {0}/{1} waiting"
+arena.timer.start: "Get ready the game will start in {0} seconds"

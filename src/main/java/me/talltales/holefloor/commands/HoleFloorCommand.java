@@ -1,4 +1,4 @@
 package me.talltales.holefloor.commands;
 
-public class HoleFloorCommand {
+public final class HoleFloorCommand {
 }

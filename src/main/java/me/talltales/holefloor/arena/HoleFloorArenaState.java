@@ -1,4 +1,8 @@
 package me.talltales.holefloor.arena;
 
-public class HoleFloorArenaState {
+public enum HoleFloorArenaState {
+    WAITING,
+    STARTING,
+    PLAYING,
+    ENDING,
 }

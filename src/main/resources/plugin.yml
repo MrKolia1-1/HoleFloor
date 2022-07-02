@@ -1,8 +1,10 @@
-name: "HoleFloor"
+name: "HoleInTheFloor"
 main: "me.talltales.holefloor.plugin.HoleFloor"
 version: "1.0-SNAPSHOT"
-api-version: 1.18
+api-version: "1.18"
 author: "TallTales"
+prefix: "HoleInTheFloor"
+website: "www.spigotmc.org"
 description:
   "
 §aHole in the Floor §fuses a completely different PvP system than any other PvP map.
