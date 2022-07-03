@@ -1,5 +1,5 @@
 name: "HoleInTheFloor"
-main: "me.talltales.holefloor.plugin.HoleFloor"
+main: "at.talltales.holefloor.plugin.HoleFloor"
 version: "1.0-SNAPSHOT"
 api-version: "1.18"
 author: "TallTales"

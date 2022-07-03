@@ -1,7 +1,9 @@
-arena.timer.wait: "Not enough players to start the game {0}/{1} waiting"
-arena.timer.start: "Get ready the game will start in {0} seconds"
-arena.timer.respawn: "You respawning in {0} seconds."
-arena.message.game-started: "▌\n▌§6§lThe game is starting!\n§r▌"
-arena.message.game-ended: "▌\n▌§b§lThe game is ending!\n§r▌"
-arena.message.respawn: "▌\n▌§a§lYou respawned!\n§r▌"
-arena.message.death: "▌\n▌§c§lYou death!\n§r▌"
+arena.bossbar.timer.wait: "§fNot enough players to start the game §c{0}/{1}§f waiting"
+arena.title.timer.wait: "§fNot enough players to start the game"
+arena.message.timer.enough-players: "§cNot enough players to start the game"
+
+arena.bossbar.timer.start: "§fGet ready the game will start in §a{0}§f seconds"
+arena.title.timer.start: "§fGet ready the game will start in §a{0}§f seconds"
+arena.message.timer.start: "§fGet ready the game will start in §a{0}§f seconds"
+
+arena.bossbar.timer.respawn: "§fYou respawn in §c{0}§f seconds, you have other §c{1}§f lives"
