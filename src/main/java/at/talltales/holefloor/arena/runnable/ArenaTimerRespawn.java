@@ -2,7 +2,6 @@ package at.talltales.holefloor.arena.runnable;
 
 import at.talltales.holefloor.arena.Arena;
 import at.talltales.holefloor.plugin.HoleFloor;
-import org.bukkit.Bukkit;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -24,10 +23,12 @@ public class ArenaTimerRespawn extends BukkitRunnable {
                 if (!map.bossBar.getPlayers().contains(player)) {
                     map.bossBar.addPlayer(player);
                 }
-                String bossbarTitle = HoleFloor.getInstance().getLocale().getString("arena.bossbar.timer.start")
+                if (map.respawnTime == 0) {
+                    HoleFloor.getInstance().getManager().respawnPlayer(this.arena, player);
+                }
+                String bossbarTitle = HoleFloor.getInstance().getLocale().getString("arena.bossbar.timer.respawn")
                         .replace("{0}", String.valueOf(map.respawnTime)
                         .replace("{1}", String.valueOf(this.arena.lifetimeMap.get(player).lives)));
-                Bukkit.getServer().broadcastMessage(String.valueOf(map.respawnTime));
                 map.bossBar.setTitle(bossbarTitle);
                 map.respawnTime--;
             }

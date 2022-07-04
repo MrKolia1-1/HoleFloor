@@ -1,6 +1,7 @@
 package at.talltales.holefloor.arena.runnable;
 
 import at.talltales.holefloor.arena.Arena;
+import at.talltales.holefloor.plugin.HoleFloor;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
@@ -22,8 +23,7 @@ public class ArenaTimerLifetime extends BukkitRunnable {
         this.map.forEach((player, map) -> {
             if (!map.isDeath) {
                 if (map.lifetime <= 0) {
-                    this.arena.deathPlayer(player);
-                    map.bossBar.removeAll();
+                    HoleFloor.getInstance().getManager().deathPlayer(this.arena, player);
                 }
                 if (map.lifetime >= 70 && map.lifetime <= 100) {
                     map.bossBar.setColor(BarColor.GREEN);
@@ -34,8 +34,10 @@ public class ArenaTimerLifetime extends BukkitRunnable {
                 if (map.lifetime >= 0 && map.lifetime <= 40) {
                     map.bossBar.setColor(BarColor.RED);
                 }
+                String bossbarTitle = HoleFloor.getInstance().getLocale().getString("arena.bossbar.timer.lifetime")
+                        .replace("{0}", String.valueOf(map.lives));
                 map.bossBar.setProgress(map.lifetime / 100D);
-                map.bossBar.setTitle(String.valueOf(map.lifetime));
+                map.bossBar.setTitle(bossbarTitle);
                 map.lifetime--;
             }
         });

@@ -58,7 +58,7 @@ public class ArenaTimerStart extends BukkitRunnable {
         String bossbarTitle = HoleFloor.getInstance().getLocale().getString("arena.bossbar.timer.start").replace("{0}", String.valueOf(seconds));
         this.bossBar.setTitle(bossbarTitle);
         if (seconds == 0) {
-            this.arena.start();
+            HoleFloor.getInstance().getManager().runArena(this.arena);
             this.bossBar.removeAll();
             this.cancel();
         }
