@@ -1,0 +1,21 @@
+lobby:
+  bossbar:
+    wait: "§fWaiting for the other §c%min%/%max%§f players to start the game"
+    start: "§fThe game will start in §a%seconds%§f seconds"
+    end: "§fThanks for playing game over, game restart in §a%seconds%§f seconds"
+  message:
+    start: "§fThe game will start in §a%seconds%§f seconds"
+    connect: "§fPlayer §a%player%§f has joined the game"
+    disconnect: "§fPlayer §c%player%§f has left the game"
+arena:
+  title:
+    respawn: "§cRespawning in:"
+    death: "§cYou died!"
+    eliminated: "§cYou're eliminate of the game"
+  message:
+    death: "§fThe player §c%player%§f has lost his one life he has §c%lives%§f lives left"
+    eliminated: "§fThe player §c%player%§f was eliminated out of the game, he had no §clives§f left"
+  bossbar:
+    lifetime: "§fLifetime is running out, you have §a%lives%§f lives"
+    respawn: "§fYou died respawn in §c%seconds%§f seconds"
+    eliminated: "§fYou're eliminate of the game, you have no §clives§f left"

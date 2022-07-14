@@ -1,1 +1,4 @@
-language: english.yml
+locale: "english.yml"
+lobby: "lobby"
+bungee-cord: "true"
+bungee-cord-arena: "0"

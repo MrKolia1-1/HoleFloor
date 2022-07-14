@@ -1,8 +1,8 @@
 name: "HoleInTheFloor"
-main: "at.talltales.holefloor.plugin.HoleFloor"
-version: "1.0-SNAPSHOT"
-api-version: "1.18"
-author: "TallTales"
+main: "net.holefloor.HoleFloor"
+version: "1.0"
+api-version: "1.19"
+author: "MrKolia1_1"
 prefix: "HoleInTheFloor"
 website: "www.spigotmc.org"
 description:
