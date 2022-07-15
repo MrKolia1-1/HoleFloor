@@ -1,20 +1,43 @@
+command:
+  help:
+    "
+    \n
+    §b§lHOLE IN §f§lTHE FLOOR§r\n
+    §7List of commands to configure plugin.\n
+    \n
+    §b○ §f/holefloor create <name> <min> <max> <lobby-world>\n
+    §b○ §f/holefloor delete <name>\n
+    §b○ §f/holefloor join <name> [player]\n
+    §b○ §f/holefloor leave [name] [player]\n
+    §b○ §f/holefloor list\n
+    "
+  created:
+    "\n
+    §aThe arena is set up and ready to go.\n
+    §fArena name: §a%name%§f minimum to starting §a%min%/%max%§f maximum slots.\n
+    §b○ §f/holefloor join <name> [player]\n
+    §b○ §f/holefloor leave [name] [player]\n
+    "
+  unknown: "§fUnknown command! use §c/holefloor help§f to view existing commands"
+  invalid: "§fInvalid value entered, please enter a valid value"
 lobby:
   bossbar:
     wait: "§fWaiting for the other §c%min%/%max%§f players to start the game"
     start: "§fThe game will start in §a%seconds%§f seconds"
     end: "§fThanks for playing game over, game restart in §a%seconds%§f seconds"
   message:
-    start: "§fThe game will start in §a%seconds%§f seconds"
-    connect: "§fPlayer §a%player%§f has joined the game"
-    disconnect: "§fPlayer §c%player%§f has left the game"
+    start: "§b○ §fThe game will start in §a%seconds%§f seconds"
+    connect: "§b○ §fPlayer §a%player%§f has joined the game"
+    disconnect: "§b○ §fPlayer §c%player%§f has left the game"
 arena:
+  booster: "§b○ §fPlayer §a%player%§f has collect a %rate%§f powerup!"
   title:
     respawn: "§cRespawning in:"
     death: "§cYou died!"
     eliminated: "§cYou're eliminate of the game"
   message:
-    death: "§fThe player §c%player%§f has lost his one life he has §c%lives%§f lives left"
-    eliminated: "§fThe player §c%player%§f was eliminated out of the game, he had no §clives§f left"
+    death: "§b○ §fThe player §c%player%§f has lost his one life he has §c%lives%§f lives left"
+    eliminated: "§b○ §fThe player §c%player%§f was eliminated out of the game, he had no §clives§f left"
   bossbar:
     lifetime: "§fLifetime is running out, you have §a%lives%§f lives"
     respawn: "§fYou died respawn in §c%seconds%§f seconds"

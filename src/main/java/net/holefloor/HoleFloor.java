@@ -1,11 +1,8 @@
 package net.holefloor;
 
-import net.holefloor.arena.Arena;
 import net.holefloor.arena.ArenaManager;
-import net.holefloor.arena.listener.ArenaListener;
-import net.holefloor.arena.tab.HoleFloorTab;
-import org.bukkit.Bukkit;
-import org.bukkit.WorldCreator;
+import net.holefloor.command.HoleFloorCommand;
+import net.holefloor.listener.LobbyListener;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,14 +11,12 @@ import java.io.File;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.util.Enumeration;
-import java.util.Objects;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public final class HoleFloor extends JavaPlugin {
     public ArenaManager manager;
     public FileConfiguration locale;
-    public HoleFloorTab holeFloorTab;
     public HoleFloor() {
         super();
     }
@@ -35,11 +30,9 @@ public final class HoleFloor extends JavaPlugin {
     public void onEnable() {
         super.onEnable();
         this.registerResources();
+        this.manager = new ArenaManager();
         this.registerListeners();
         this.registerCommands();
-        this.manager = new ArenaManager();
-        this.manager.create("arena0", 2, 10, Objects.requireNonNull(new WorldCreator("lobby").createWorld()).getSpawnLocation());
-        HoleFloor.getInstance().holeFloorTab = new HoleFloorTab();
     }
 
     @Override
@@ -49,10 +42,10 @@ public final class HoleFloor extends JavaPlugin {
     }
 
     public void registerListeners() {
-        Bukkit.getPluginManager().registerEvents(new ArenaListener(), this);
+        this.manager.lobbyListener = new LobbyListener();
     }
     public void registerCommands() {
-
+        this.getCommand("holeinthefloor").setExecutor(new HoleFloorCommand());
     }
     public void registerResources() {
         this.saveDefaultConfig();

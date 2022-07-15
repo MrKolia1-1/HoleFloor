@@ -14,3 +14,6 @@ which is in the middle of every battlefield. If that happens they'll lose a life
 You also have a §clifetime §fbar which slowly decreases over time.
 If you run out of lifetime you will also die, but you can easily regain lifetime, by jumping over the hole!
   "
+commands:
+  holeinthefloor:
+    aliases: [hf, holefloor]

@@ -8,5 +8,5 @@ public final class ArenaLifeTimeMap {
     public Integer lifetime;
     public Boolean isDead;
     public Boolean isEliminated;
-    public int respawnTime;
+    public Integer respawnTime;
 }

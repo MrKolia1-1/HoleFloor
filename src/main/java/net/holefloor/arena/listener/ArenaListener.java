@@ -1,33 +1,49 @@
 package net.holefloor.arena.listener;
 
-import net.holefloor.HoleFloor;
 import net.holefloor.arena.Arena;
+import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.ExplosionPrimeEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 
-public final class ArenaListener implements Listener {
-    @EventHandler
-    private void on(PlayerSwapHandItemsEvent event) {
-        Arena arena = HoleFloor.getInstance().manager.arenas.get(0);
-        if (event.getPlayer().isSneaking()) {
-            HoleFloor.getInstance().manager.disconnect(arena, event.getPlayer());
-            return;
-        }
-        HoleFloor.getInstance().manager.connect(arena, event.getPlayer());
+public class ArenaListener implements Listener {
+    private final Arena arena;
+    public ArenaListener(Arena arena) {
+        this.arena = arena;
     }
 
     @EventHandler
-    private void on(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        if (HoleFloor.getInstance().getConfig().getBoolean("bungee-cord")) {
-            HoleFloor.getInstance().manager.arenas.forEach(arena -> {
-                if (arena.properties.id.equals(HoleFloor.getInstance().getConfig().getString("bungee-cord-arena"))) {
-                    HoleFloor.getInstance().manager.connect(arena, player);
-                }
-            });
+    private void onEntityDamageEvent(EntityDamageEvent event) {
+        Entity entity = event.getEntity();
+        World world = entity.getWorld();
+
+        if (this.arena.properties.world.equals(world)) {
+            event.setDamage(0);
+            if (entity instanceof Player) {
+                entity.setVelocity(entity.getVelocity().multiply(2));
+            }
+        }
+    }
+    @EventHandler
+    private void onEntityDamageEvent(FoodLevelChangeEvent event) {
+        Entity entity = event.getEntity();
+        World world = entity.getWorld();
+
+        if (this.arena.properties.world.equals(world)) {
+            event.setCancelled(true);
+        }
+    }
+    @EventHandler
+    private void onEntityDamageEvent(ExplosionPrimeEvent event) {
+        Entity entity = event.getEntity();
+        World world = entity.getWorld();
+
+        if (this.arena.properties.world.equals(world)) {
+            event.setRadius(0);
         }
     }
 }

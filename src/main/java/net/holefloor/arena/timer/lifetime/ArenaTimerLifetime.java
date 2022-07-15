@@ -40,18 +40,21 @@ public final class ArenaTimerLifetime {
                 map.bossBar.addPlayer(player);
             }
             if (!map.isDead && !map.isEliminated) {
+                if (map.lifetime > 500) {
+                    map.lifetime = 500;
+                }
                 if (map.lifetime >= 0) {
                     map.bossBar.setTitle(Objects.requireNonNull(arena.instance.locale.getString("arena.bossbar.lifetime"))
                             .replace("%lives%", String.valueOf(map.lives)));
                     map.bossBar.setProgress(map.lifetime / 500D);
-                    if (map.lifetime >= 70) {
+                    if (map.lifetime >= 300) {
                         map.bossBar.setColor(BarColor.GREEN);
                     }
-                    if (map.lifetime >= 30 && map.lifetime <= 70) {
+                    if (map.lifetime >= 300 && map.lifetime <= 100) {
                         map.bossBar.setColor(BarColor.YELLOW);
                     }
 
-                    if (map.lifetime <= 30) {
+                    if (map.lifetime <= 100) {
                         map.bossBar.setColor(BarColor.RED);
                     }
                     map.lifetime--;
@@ -82,23 +85,13 @@ public final class ArenaTimerLifetime {
                         map.bossBar.setTitle(Objects.requireNonNull(arena.instance.locale.getString("arena.bossbar.respawn"))
                                 .replace("%seconds%", String.valueOf(map.respawnTime)));
 
-                        if (map.respawnTime == 3) {
-                            player.sendTitle("§c3", Objects.requireNonNull(this.arena.instance.locale.getString("arena.title.respawn")), 0, 25, 0);
-                        }
-                        if (map.respawnTime == 2) {
-                            player.sendTitle("§e2", Objects.requireNonNull(this.arena.instance.locale.getString("arena.title.respawn")), 0, 25, 0);
-                        }
-                        if (map.respawnTime == 1) {
-                            player.sendTitle("§a1", Objects.requireNonNull(this.arena.instance.locale.getString("arena.title.respawn")), 0, 30, 0);
-                        }
-                        if (map.respawnTime == 0) {
-                            player.sendTitle("§aGO", "", 0, 25, 0);
-                        }
-                        if (map.respawnTime <= 3) {
+                        if (map.respawnTime <= 3 && map.respawnTime >= 1) {
+                            player.sendTitle("§b" + map.respawnTime, Objects.requireNonNull(this.arena.instance.locale.getString("arena.title.respawn")), 0, 30, 0);
                             player.playSound(player, Sound.BLOCK_AMETHYST_CLUSTER_HIT, 1, 2);
                         }
                     }
                     if (map.respawnTime == 0) {
+                        player.sendTitle("§aGO", "", 0, 25, 0);
                         this.respawn(player);
                     }
                     map.respawnTime--;
@@ -146,6 +139,9 @@ public final class ArenaTimerLifetime {
         ArenaLifeTimeMap map = this.hashMap.get(player);
         map.isEliminated = true;
         map.isDead = true;
+        map.lives = 0;
+        map.lifetime = 0;
+
         map.bossBar.setTitle(Objects.requireNonNull(arena.instance.locale.getString("arena.bossbar.eliminated")));
         map.bossBar.setColor(BarColor.RED);
         map.bossBar.setProgress(1);

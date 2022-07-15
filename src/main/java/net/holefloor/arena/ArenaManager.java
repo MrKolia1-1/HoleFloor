@@ -2,20 +2,25 @@ package net.holefloor.arena;
 
 import com.github.shynixn.structureblocklib.api.bukkit.StructureBlockLibApi;
 import net.holefloor.HoleFloor;
+import net.holefloor.arena.listener.ArenaListener;
+import net.holefloor.arena.powerup.ArenaPowerBooster;
 import net.holefloor.arena.properties.ArenaCitizens;
 import net.holefloor.arena.properties.ArenaProperties;
 import net.holefloor.arena.properties.ArenaState;
 import net.holefloor.arena.properties.ArenaType;
-import net.holefloor.arena.tab.HoleFloorTab;
 import net.holefloor.arena.timer.ArenaScheduler;
 import net.holefloor.arena.timer.lifetime.ArenaLifeTimeMap;
+import net.holefloor.listener.LobbyListener;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -23,10 +28,13 @@ import java.util.*;
 
 public final class ArenaManager {
     public List<Arena> arenas = new ArrayList<>();
+    public LobbyListener lobbyListener;
 
     public Arena create(String id, Integer min, Integer max, Location lobby) {
         Arena arena = new Arena();
         arena.instance = HoleFloor.getInstance();
+        arena.listener = new ArenaListener(arena);
+        arena.booster = new ArenaPowerBooster(arena);
         ArenaProperties properties = new ArenaProperties();
         properties.id = id;
         properties.type = ArenaType.values()[new Random().nextInt(ArenaType.values().length)];
@@ -41,6 +49,11 @@ public final class ArenaManager {
             }
         }).createWorld();
         properties.world.setGameRule(GameRule.DO_ENTITY_DROPS, Boolean.FALSE);
+        properties.world.setGameRule(GameRule.DO_TILE_DROPS, Boolean.FALSE);
+        properties.world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, Boolean.FALSE);
+        properties.world.setGameRule(GameRule.DO_WEATHER_CYCLE, Boolean.FALSE);
+        properties.world.setGameRule(GameRule.DO_MOB_SPAWNING, Boolean.FALSE);
+        properties.world.setGameRule(GameRule.DO_FIRE_TICK, Boolean.FALSE);
 
         ArenaCitizens citizens = new ArenaCitizens();
         citizens.min = min;
@@ -70,6 +83,8 @@ public final class ArenaManager {
         arena.properties.state = ArenaState.PLAYING;
         arena.properties.citizens.players.clear();                            //        delete after
         arena.properties.citizens.players.add(Bukkit.getPlayer("lolzworker"));///////// delete after
+        Bukkit.getPluginManager().registerEvents(arena.listener, arena.instance);
+
         HashMap<Player, ArenaLifeTimeMap> hashMap = new HashMap<>();
         arena.properties.citizens.players.forEach(player -> {
             ArenaLifeTimeMap map = new ArenaLifeTimeMap();
@@ -80,13 +95,20 @@ public final class ArenaManager {
             map.isEliminated = false;
             map.respawnTime = 10;
             hashMap.put(player, map);
+
             Objects.requireNonNull(
                     player.getAttribute(Attribute.GENERIC_MAX_HEALTH))
                     .setBaseValue(map.lives * 2);
             player.setHealth(map.lives * 2);
-
+            player.sendTitle("§aGO", "", 0, 25, 0);
             player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 1, 0);
             player.setGameMode(GameMode.ADVENTURE);
+
+            ItemStack itemStack = new ItemStack(Material.FISHING_ROD);
+            ItemMeta itemMeta = itemStack.getItemMeta();
+            itemMeta.setUnbreakable(true);
+            itemStack.setItemMeta(itemMeta);
+            player.getInventory().addItem(itemStack);
 
             Location location = arena.properties.type.getSpawns().get(new Random().nextInt(arena.properties.type.getSpawns().size()));
             location.setWorld(arena.properties.world);
@@ -98,14 +120,32 @@ public final class ArenaManager {
     public void end(Arena arena) {
         arena.scheduler.timerLifetime.cancel();
         arena.properties.state = ArenaState.ENDING;
+        arena.properties.citizens.players.forEach(player -> {
+            player.getInventory().clear();
+            Objects.requireNonNull(
+                            player.getAttribute(Attribute.GENERIC_MAX_HEALTH))
+                    .setBaseValue(20);
+            player.setHealth(20);
+        });
+        arena.booster.stand.remove();
     }
 
     public void stop(Arena arena) {
+        arena.properties.citizens.players.forEach(player -> {
+            player.getInventory().clear();
+            Objects.requireNonNull(
+                            player.getAttribute(Attribute.GENERIC_MAX_HEALTH))
+                    .setBaseValue(20);
+            player.setHealth(20);
+        });
         try {
             arena.scheduler.timerWait.cancel();
             arena.scheduler.timerStart.cancel();
             arena.scheduler.timerEnd.cancel();
             arena.scheduler.timerLifetime.cancel();
+            arena.scheduler.cancel();
+            arena.booster.stand.remove();
+            HandlerList.unregisterAll(arena.listener);
         } catch (Exception ignored){}
     }
 
@@ -116,7 +156,13 @@ public final class ArenaManager {
                     .replace("%player%", player.getName()));
             consumer.playSound(consumer.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_CHIME, 1, 1);
         });
+        Objects.requireNonNull(
+                        player.getAttribute(Attribute.GENERIC_MAX_HEALTH))
+                .setBaseValue(20);
+        player.setHealth(20);
+        player.getInventory().clear();
         player.teleport(arena.properties.lobby);
+        player.setGameMode(GameMode.ADVENTURE);
     }
     public void disconnect(Arena arena, Player player) {
         arena.properties.citizens.players.remove(player);
@@ -125,6 +171,8 @@ public final class ArenaManager {
                     .replace("%player%", player.getName()));
             consumer.playSound(consumer.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_CHIME, 1, 1);
         });
+        player.setGameMode(GameMode.ADVENTURE);
+        player.getInventory().clear();
     }
 
     public void loadMap(Arena arena, ArenaType type) {

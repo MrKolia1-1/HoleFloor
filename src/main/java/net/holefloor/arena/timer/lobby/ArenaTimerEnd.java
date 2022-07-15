@@ -38,11 +38,13 @@ public final class ArenaTimerEnd {
 
         if (this.arena.scheduler.tick % 20 == 0) {
             Player top1 = this.arena.scheduler.timerLifetime.top.get(this.arena.scheduler.timerLifetime.top.size() - 1);
+
             Firework fw = top1.getWorld().spawn(top1.getLocation(), Firework.class);
             FireworkMeta fwm = fw.getFireworkMeta();
-            fwm.addEffect(FireworkEffect.builder().withColor(Color.RED).withColor(Color.YELLOW).trail(true).flicker(true).with(FireworkEffect.Type.BALL_LARGE).withFade(Color.LIME).build());
+            fwm.addEffect(FireworkEffect.builder().withColor(Color.RED).withColor(Color.GREEN).trail(true).flicker(true).with(FireworkEffect.Type.BURST).withFade(Color.LIME).build());
             fwm.setPower(1);
             fw.setFireworkMeta(fwm);
+
             if (this.seconds == 0) {
                 this.arena.properties.state = ArenaState.WAITING;
                 this.arena.properties.citizens.players.forEach(player -> {
