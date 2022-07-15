@@ -1,6 +1,7 @@
 package net.holefloor.command;
 
 import net.holefloor.HoleFloor;
+import net.holefloor.arena.properties.ArenaState;
 import org.bukkit.Bukkit;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
@@ -52,6 +53,28 @@ public class HoleFloorCommand implements CommandExecutor, TabCompleter {
                 }
                 return true;
             }
+            case "delete" : {
+                if (args.length == 1) {
+                    sender.sendMessage("§b○ §f/holefloor delete <name>");
+                    return true;
+                }
+                if (args.length == 2) {
+                    HoleFloor.getInstance().manager.arenas.forEach(arena -> {
+                        if (arena.properties.id.equalsIgnoreCase(args[1])) {
+                            sender.sendMessage(HoleFloor.getInstance().locale.getString("command.deleted")
+                                    .replace("%name%", args[1])
+                            );
+                            arena.properties.citizens.players.forEach(player -> {
+                                player.teleport(arena.properties.lobby);
+                            });
+                            try {
+                                HoleFloor.getInstance().manager.stop(arena);
+                            } catch (Exception ignored) {}
+                        }
+                    });
+                    return true;
+                }
+            }
             case "join" : {
                 if (args.length == 1) {
                     sender.sendMessage("§b○ §f/holefloor join <name> [player]");
@@ -75,6 +98,35 @@ public class HoleFloorCommand implements CommandExecutor, TabCompleter {
                         }
                         else {
                             sender.sendMessage("§b○ §f/holefloor join <name> [player]");
+                        }
+                    });
+                    return true;
+                }
+                return true;
+            }
+            case "leave" : {
+                if (args.length == 1) {
+                    sender.sendMessage("§b○ §f/holefloor leave <name> [player]");
+                    return true;
+                }
+                if (args.length == 2) {
+                    HoleFloor.getInstance().manager.arenas.forEach(arena -> {
+                        if (arena.properties.id.equalsIgnoreCase(args[1])) {
+                            HoleFloor.getInstance().manager.disconnect(arena, (Player) sender);
+                        }
+                        else {
+                            sender.sendMessage("§b○ §f/holefloor leave <name> [player]");
+                        }
+                    });
+                    return true;
+                }
+                if (args.length == 3) {
+                    HoleFloor.getInstance().manager.arenas.forEach(arena -> {
+                        if (arena.properties.id.equalsIgnoreCase(args[1])) {
+                            HoleFloor.getInstance().manager.disconnect(arena, Bukkit.getPlayer(args[2]));
+                        }
+                        else {
+                            sender.sendMessage("§b○ §f/holefloor leave <name> [player]");
                         }
                     });
                     return true;

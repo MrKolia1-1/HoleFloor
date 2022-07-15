@@ -113,7 +113,7 @@ public final class ArenaPowerBooster {
             }
         }
 
-        this.arena.scheduler.timerLifetime.hashMap.get(player).lifetime = this.arena.scheduler.timerLifetime.hashMap.get(player).lifetime + 1000 + new Random().nextInt(100);
+        this.arena.scheduler.timerLifetime.hashMap.get(player).lifetime = this.arena.scheduler.timerLifetime.hashMap.get(player).lifetime + 100 + new Random().nextInt(100);
         this.isSpawned = false;
         this.stand.remove();
     }

@@ -9,7 +9,7 @@ command:
     §b○ §f/holefloor delete <name>\n
     §b○ §f/holefloor join <name> [player]\n
     §b○ §f/holefloor leave [name] [player]\n
-    §b○ §f/holefloor list\n
+  
     "
   created:
     "\n
@@ -20,6 +20,7 @@ command:
     "
   unknown: "§fUnknown command! use §c/holefloor help§f to view existing commands"
   invalid: "§fInvalid value entered, please enter a valid value"
+  deleted: "§fArena §a%name%§f successfully removed from the game"
 lobby:
   bossbar:
     wait: "§fWaiting for the other §c%min%/%max%§f players to start the game"

@@ -26,6 +26,9 @@ public class ArenaListener implements Listener {
             if (entity instanceof Player) {
                 entity.setVelocity(entity.getVelocity().multiply(2));
             }
+            if (event.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE)) {
+                entity.setVelocity(entity.getVelocity().multiply(3));
+            }
         }
     }
     @EventHandler
@@ -35,6 +38,7 @@ public class ArenaListener implements Listener {
 
         if (this.arena.properties.world.equals(world)) {
             event.setCancelled(true);
+            event.setFoodLevel(20);
         }
     }
     @EventHandler

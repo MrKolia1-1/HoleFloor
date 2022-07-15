@@ -3,6 +3,9 @@ package net.holefloor;
 import net.holefloor.arena.ArenaManager;
 import net.holefloor.command.HoleFloorCommand;
 import net.holefloor.listener.LobbyListener;
+import net.holefloor.scoreboard.HoleFloorBoard;
+import net.holefloor.tab.HoleFloorTab;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,6 +20,8 @@ import java.util.jar.JarFile;
 public final class HoleFloor extends JavaPlugin {
     public ArenaManager manager;
     public FileConfiguration locale;
+    public HoleFloorTab tab;
+    public HoleFloorBoard board;
     public HoleFloor() {
         super();
     }
@@ -33,12 +38,17 @@ public final class HoleFloor extends JavaPlugin {
         this.manager = new ArenaManager();
         this.registerListeners();
         this.registerCommands();
+        this.tab = new HoleFloorTab();
+        this.board = new HoleFloorBoard();
     }
 
     @Override
     public void onDisable() {
         super.onDisable();
         this.manager.arenas.forEach(arena -> this.manager.stop(arena));
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+        });
     }
 
     public void registerListeners() {

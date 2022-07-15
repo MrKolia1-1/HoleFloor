@@ -1,5 +1,6 @@
 package net.holefloor.arena.timer;
 
+import net.holefloor.HoleFloor;
 import net.holefloor.arena.Arena;
 import net.holefloor.arena.powerup.ArenaBoosterType;
 import net.holefloor.arena.properties.ArenaState;
@@ -7,6 +8,7 @@ import net.holefloor.arena.timer.lifetime.ArenaTimerLifetime;
 import net.holefloor.arena.timer.lobby.ArenaTimerEnd;
 import net.holefloor.arena.timer.lobby.ArenaTimerStart;
 import net.holefloor.arena.timer.lobby.ArenaTimerWait;
+import net.holefloor.tab.HoleFloorTab;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -71,6 +73,8 @@ public final class ArenaScheduler {
             }
         }
 
+        HoleFloor.getInstance().tab.update();
+        HoleFloor.getInstance().board.update();
         if (this.arena.properties.state.equals(ArenaState.ENDING)) {
             this.timerEnd.run();
         }

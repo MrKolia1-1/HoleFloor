@@ -81,8 +81,6 @@ public final class ArenaManager {
 
     public void launch(Arena arena) {
         arena.properties.state = ArenaState.PLAYING;
-        arena.properties.citizens.players.clear();                            //        delete after
-        arena.properties.citizens.players.add(Bukkit.getPlayer("lolzworker"));///////// delete after
         Bukkit.getPluginManager().registerEvents(arena.listener, arena.instance);
 
         HashMap<Player, ArenaLifeTimeMap> hashMap = new HashMap<>();
@@ -131,13 +129,16 @@ public final class ArenaManager {
     }
 
     public void stop(Arena arena) {
-        arena.properties.citizens.players.forEach(player -> {
-            player.getInventory().clear();
-            Objects.requireNonNull(
-                            player.getAttribute(Attribute.GENERIC_MAX_HEALTH))
-                    .setBaseValue(20);
-            player.setHealth(20);
-        });
+        try {
+            arena.properties.citizens.players.forEach(player -> {
+                player.getInventory().clear();
+                Objects.requireNonNull(
+                                player.getAttribute(Attribute.GENERIC_MAX_HEALTH))
+                        .setBaseValue(20);
+                player.setHealth(20);
+            });
+
+        }catch (Exception ignored) {}
         try {
             arena.scheduler.timerWait.cancel();
             arena.scheduler.timerStart.cancel();
